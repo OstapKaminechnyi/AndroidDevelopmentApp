@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context="iot.ostapkmn.app.SignInActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+
+        <EditText
+            android:id="@+id/sign_in_email"
+            android:layout_width="275dp"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:hint="@string/email"
+            android:layout_marginTop="250dp"
+            android:inputType="textEmailAddress"
+            android:layout_centerHorizontal="true"/>
+
+        <EditText
+            android:id="@+id/sign_in_password"
+            android:layout_width="275dp"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:hint="@string/password"
+            android:layout_marginTop="310dp"
+            android:inputType="textPassword"
+            android:layout_centerHorizontal="true" />
+        <Button
+            android:id="@+id/btn_sign_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:text="@string/sign_in"
+            android:textSize="18sp"
+            android:layout_marginTop="390dp"
+            android:textColor="@android:color/white"
+            android:textAllCaps="false"
+            android:layout_centerHorizontal="true"
+            />
+
+        <TextView
+            android:id="@+id/btn_sign_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="#FFFFFF"
+            android:text="@string/sign_up"
+            android:padding="16dp"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+</RelativeLayout>
