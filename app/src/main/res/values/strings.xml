@@ -8,4 +8,11 @@
     <string name="phone_number">phone number</string>
     <string name="sign_out">Sign Out</string>
     <string name="name">name</string>
+    <string name="passwordError">Please enter valid password</string>
+    <string name="emailError">Please enter valid email</string>
+    <string name="loginError">Login failed.</string>
+    <string name="tryAgainMessage">Oopsie. Try again.</string>
+    <string name="createUserError">Failed to create user</string>
+    <string name="phoneNumberError">Please enter valid phone number</string>
+    <string name="usernameError">Please enter valid username</string>
 </resources>

@@ -14,14 +14,17 @@ import kotlinx.android.synthetic.main.activity_sign_up.btn_sign_up
 import java.util.regex.Pattern
 
 class SignUpActivity : AppCompatActivity() {
+
     private lateinit var auth: FirebaseAuth
     private lateinit var currentUser: FirebaseUser
-
+    private companion object {
+        const val PASSWORD_PATTERN = "^[a-zA-Z0-9!@.#$%^&*?_~]{8,16}$"
+        const val PHONE_NUMBER_PATTERN = "^\\+380\\d{3}\\d{2}\\d{2}\\d{2}\$"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
         auth = FirebaseAuth.getInstance()
-
         btn_sign_up.setOnClickListener {
             signUp()
         }
@@ -36,7 +39,7 @@ class SignUpActivity : AppCompatActivity() {
                 && isValidEmail(email) && isValidPassword(password)) {
             createUser()
         } else {
-            Toast.makeText(baseContext, "Oopsie. Error!",
+            Toast.makeText(baseContext,  getString(R.string.tryAgainMessage),
                     Toast.LENGTH_SHORT).show()
         }
     }
@@ -49,7 +52,7 @@ class SignUpActivity : AppCompatActivity() {
                         authenticateUser()
                     } else {
                         Toast.makeText(
-                                baseContext, "Failed to create user",
+                                baseContext, getString(R.string.createUserError),
                                 Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -70,30 +73,30 @@ class SignUpActivity : AppCompatActivity() {
     private fun isValidEmail(email: String): Boolean {
         val pattern = Patterns.EMAIL_ADDRESS
         return if (sign_up_email.text.toString().isEmpty()) {
-            sign_up_email.error = "Please enter valid email"
+            sign_up_email.error = getString(R.string.emailError)
             false
         } else pattern.matcher(email).matches()
     }
 
     private fun isValidPassword(password: String): Boolean {
-        val passwordPattern: Pattern = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{8,16}$")
+        val passwordPattern: Pattern = Pattern.compile(PASSWORD_PATTERN)
         return if (sign_up_password.text.toString().isEmpty()) {
-            sign_up_password.error = "Please enter valid password"
+            sign_up_password.error = getString(R.string.passwordError)
             false
         } else passwordPattern.matcher(password).matches()
     }
 
     private fun isValidPhoneNumber(phoneNumber: String): Boolean {
-        val phonePattern: Pattern = Pattern.compile("^\\+380\\d{3}\\d{2}\\d{2}\\d{2}\$")
+        val phonePattern: Pattern = Pattern.compile(PHONE_NUMBER_PATTERN)
         return if (sign_up_phone_number.text.toString().isEmpty()) {
-            sign_up_phone_number.error = "Please enter valid phone number"
+            sign_up_phone_number.error = getString(R.string.phoneNumberError)
             false
         } else phonePattern.matcher(phoneNumber).matches()
     }
 
     private fun isValidUsername(username: String): Boolean {
         return if (sign_up_name.text.toString().isEmpty()) {
-            sign_up_name.error = "Please enter valid username"
+            sign_up_name.error = getString(R.string.usernameError)
             false
         } else return true
     }

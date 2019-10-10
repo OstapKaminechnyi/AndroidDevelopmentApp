@@ -12,24 +12,27 @@ import java.util.regex.Pattern
 
 
 class SignInActivity : AppCompatActivity() {
+
     private lateinit var auth: FirebaseAuth
+
+    private companion object {
+        const val PASSWORD_PATTERN = "^[a-zA-Z0-9!@.#$%^&*?_~]{8,16}$"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
         auth = FirebaseAuth.getInstance()
-
         btn_sign_up.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
             finish()
         }
-
         btn_sign_in.setOnClickListener {
             if (isValidEmail(sign_in_email.text.toString())
                     && isValidPassword(sign_in_password.text.toString())) {
                 signIn()
             } else {
-                Toast.makeText(baseContext, "Try again",
+                Toast.makeText(baseContext, getString(R.string.tryAgainMessage),
                         Toast.LENGTH_SHORT).show()
             }
         }
@@ -61,7 +64,7 @@ class SignInActivity : AppCompatActivity() {
             finish()
         } else {
             Toast.makeText(
-                    baseContext, "Login failed.",
+                    baseContext, getString(R.string.loginError),
                     Toast.LENGTH_SHORT
             ).show()
         }
@@ -70,15 +73,15 @@ class SignInActivity : AppCompatActivity() {
     private fun isValidEmail(email: String): Boolean {
         val pattern = Patterns.EMAIL_ADDRESS
         return if (sign_in_email.text.toString().isEmpty()) {
-            sign_in_email.error = "Please enter valid email"
+            sign_in_email.error = getString(R.string.emailError)
             false
         } else pattern.matcher(email).matches()
     }
 
     private fun isValidPassword(password: String): Boolean {
-        val passwordPattern: Pattern = Pattern.compile("^[a-zA-Z0-9!@.#$%^&*?_~]{8,16}$")
+        val passwordPattern: Pattern = Pattern.compile(PASSWORD_PATTERN)
         return if (sign_in_password.text.toString().isEmpty()) {
-            sign_in_password.error = "Please enter valid password"
+            sign_in_password.error = getString(R.string.passwordError)
             false
         } else passwordPattern.matcher(password).matches()
     }

@@ -13,12 +13,11 @@ class WelcomeActivity : AppCompatActivity() {
 
     private var auth = FirebaseAuth.getInstance()
     private lateinit var user: FirebaseUser
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome_page)
-
         showUserInfo()
-
         btn_sign_out.setOnClickListener {
             signOut()
         }
