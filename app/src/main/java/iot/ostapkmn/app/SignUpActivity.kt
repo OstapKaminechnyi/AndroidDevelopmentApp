@@ -17,10 +17,12 @@ class SignUpActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var currentUser: FirebaseUser
+
     private companion object {
         const val PASSWORD_PATTERN = "^[a-zA-Z0-9!@.#$%^&*?_~]{8,16}$"
         const val PHONE_NUMBER_PATTERN = "^\\+380\\d{3}\\d{2}\\d{2}\\d{2}\$"
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
@@ -39,7 +41,7 @@ class SignUpActivity : AppCompatActivity() {
                 && isValidEmail(email) && isValidPassword(password)) {
             createUser()
         } else {
-            Toast.makeText(baseContext,  getString(R.string.tryAgainMessage),
+            Toast.makeText(baseContext, getString(R.string.tryAgainMessage),
                     Toast.LENGTH_SHORT).show()
         }
     }

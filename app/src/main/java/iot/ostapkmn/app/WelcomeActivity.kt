@@ -25,7 +25,7 @@ class WelcomeActivity : AppCompatActivity() {
 
     private fun showUserInfo() {
         user = auth.currentUser!!
-        name.text = "Welcome, " + user.displayName + " !"
+        name.text = resources.getString(R.string.welcomeString) + user.displayName
     }
 
     private fun signOut() {
@@ -34,8 +34,3 @@ class WelcomeActivity : AppCompatActivity() {
         finish()
     }
 }
-
-
-
-
-

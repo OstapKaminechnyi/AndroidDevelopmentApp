@@ -28,13 +28,7 @@ class SignInActivity : AppCompatActivity() {
             finish()
         }
         btn_sign_in.setOnClickListener {
-            if (isValidEmail(sign_in_email.text.toString())
-                    && isValidPassword(sign_in_password.text.toString())) {
-                signIn()
-            } else {
-                Toast.makeText(baseContext, getString(R.string.tryAgainMessage),
-                        Toast.LENGTH_SHORT).show()
-            }
+          signIn()
         }
     }
 
@@ -47,6 +41,16 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun signIn() {
+        if (isValidEmail(sign_in_email.text.toString())
+                && isValidPassword(sign_in_password.text.toString())) {
+            authenticateUser()
+        } else {
+            Toast.makeText(baseContext, getString(R.string.tryAgainMessage),
+                    Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun authenticateUser() {
         auth.signInWithEmailAndPassword(sign_in_email.text.toString(), sign_in_password.text.toString())
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
@@ -86,5 +90,3 @@ class SignInActivity : AppCompatActivity() {
         } else passwordPattern.matcher(password).matches()
     }
 }
-
-
