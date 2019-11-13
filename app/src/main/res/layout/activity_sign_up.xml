@@ -24,6 +24,18 @@
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
+        <Button
+            android:id="@+id/btn_sign_in_back"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="450dp"
+            android:padding="16dp"
+            android:text="@string/sign_in"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
         <EditText
             android:id="@+id/sign_up_phone_number"
             android:layout_width="275dp"

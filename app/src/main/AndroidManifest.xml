@@ -13,8 +13,9 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".SignUpActivity"
-        />
-        <activity android:name=".SignInActivity">
+            android:noHistory="true"
+            />
+        <activity android:name=".SignInActivity"  android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

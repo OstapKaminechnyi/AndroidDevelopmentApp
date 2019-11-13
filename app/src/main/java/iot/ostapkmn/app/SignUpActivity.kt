@@ -30,6 +30,10 @@ class SignUpActivity : AppCompatActivity() {
         btn_sign_up.setOnClickListener {
             signUp()
         }
+        btn_sign_in_back.setOnClickListener {
+            startActivity(Intent(this, SignInActivity::class.java))
+            finish()
+        }
     }
 
     private fun signUp() {

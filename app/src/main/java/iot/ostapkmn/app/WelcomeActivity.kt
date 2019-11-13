@@ -25,7 +25,8 @@ class WelcomeActivity : AppCompatActivity() {
 
     private fun showUserInfo() {
         user = auth.currentUser!!
-        name.text = resources.getString(R.string.welcomeString) + user.displayName
+        val welcomeString = resources.getString(R.string.welcomeString) + user.displayName
+        name.text = welcomeString
     }
 
     private fun signOut() {
