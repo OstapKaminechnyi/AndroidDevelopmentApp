@@ -16,4 +16,5 @@
     <string name="phoneNumberError">Please enter valid phone number</string>
     <string name="usernameError">Please enter valid username</string>
     <string name="welcomeString">Welcome, \u0020</string>
+    <string name="offline">Offline</string>
 </resources>

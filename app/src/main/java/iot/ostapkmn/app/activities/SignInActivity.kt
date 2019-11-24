@@ -1,4 +1,4 @@
-package iot.ostapkmn.app
+package iot.ostapkmn.app.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import iot.ostapkmn.app.R
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import java.util.regex.Pattern
 
@@ -64,7 +65,7 @@ class SignInActivity : AppCompatActivity() {
 
     private fun updateUI(currentUser: FirebaseUser?) {
         if (currentUser != null) {
-            startActivity(Intent(this, WelcomeActivity::class.java))
+            startActivity(Intent(this, ListActivity::class.java))
             finish()
         } else {
             Toast.makeText(

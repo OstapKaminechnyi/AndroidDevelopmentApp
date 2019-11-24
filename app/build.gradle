@@ -38,6 +38,15 @@ dependencies {
     //firebase
     implementation 'com.google.firebase:firebase-auth:19.0.0'
     implementation 'com.google.firebase:firebase-core:17.2.0'
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    //http-interceptor
+    implementation "com.squareup.okhttp3:logging-interceptor:3.8.0"
+    //image handler
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+
 }
 apply plugin: 'com.google.gms.google-services'
 
