@@ -1,4 +1,4 @@
-package iot.ostapkmn.app
+package iot.ostapkmn.app.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
-import kotlinx.android.synthetic.main.activity_sign_in.*
+import iot.ostapkmn.app.R
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.activity_sign_up.btn_sign_up
 import java.util.regex.Pattern
@@ -70,7 +70,7 @@ class SignUpActivity : AppCompatActivity() {
         val firebaseUpdate = UserProfileChangeRequest.Builder()
                 .setDisplayName(sign_up_name.text.toString()).build()
         currentUser.updateProfile(firebaseUpdate).addOnCompleteListener {
-            startActivity(Intent(this, WelcomeActivity
+            startActivity(Intent(this, ListActivity
             ::class.java))
             finish()
         }

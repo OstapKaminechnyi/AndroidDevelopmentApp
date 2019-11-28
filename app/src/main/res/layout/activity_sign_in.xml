@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context="iot.ostapkmn.app.SignInActivity">
+    tools:context="iot.ostapkmn.app.activities.SignInActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
