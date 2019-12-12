@@ -17,4 +17,15 @@
     <string name="usernameError">Please enter valid username</string>
     <string name="welcomeString">Welcome, \u0020</string>
     <string name="offline">Offline</string>
+    <string name="list">List</string>
+    <string name="tab2">Tab2</string>
+    <string name="profile">Profile</string>
+    <string name="your_name">Your name</string>
+    <string name="change_password">Change password</string>
+    <string name="update_profile">Update profile</string>
+    <string name="upload_picture">Uploading Picture....</string>
+    <string name="photo_is_uploaded">Photo is uploaded</string>
+    <string name="requiredField">field is required</string>
+    <string name="incorrectField">field is incorrect</string>
+
 </resources>

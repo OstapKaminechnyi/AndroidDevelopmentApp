@@ -66,6 +66,7 @@ class SignInActivity : AppCompatActivity() {
     private fun updateUI(currentUser: FirebaseUser?) {
         if (currentUser != null) {
             startActivity(Intent(this, ListActivity::class.java))
+
             finish()
         } else {
             Toast.makeText(
