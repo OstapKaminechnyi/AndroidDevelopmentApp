@@ -65,7 +65,7 @@ class SignInActivity : AppCompatActivity() {
 
     private fun updateUI(currentUser: FirebaseUser?) {
         if (currentUser != null) {
-            startActivity(Intent(this, ListActivity::class.java))
+            startActivity(Intent(this, TabActivity::class.java))
 
             finish()
         } else {

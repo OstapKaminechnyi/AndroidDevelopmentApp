@@ -22,10 +22,15 @@
     <string name="profile">Profile</string>
     <string name="your_name">Your name</string>
     <string name="change_password">Change password</string>
-    <string name="update_profile">Update profile</string>
-    <string name="upload_picture">Uploading Picture....</string>
-    <string name="photo_is_uploaded">Photo is uploaded</string>
+    <string name="fillUpCredentials">credentials is filled</string>
+    <string name="email_is_updated">email is updated</string>
     <string name="requiredField">field is required</string>
     <string name="incorrectField">field is incorrect</string>
+    <string name="photo_is_uploaded">photo is uploated</string>
+    <string name="upload_picture">picture is upload</string>
+    <string name="update_profile">update profile</string>
+    <string name="successfulSignUp">signUp is successful</string>
+    <string name="select_picture">select picture</string>
+    <string name="successfully_update_profile">success</string>
 
 </resources>

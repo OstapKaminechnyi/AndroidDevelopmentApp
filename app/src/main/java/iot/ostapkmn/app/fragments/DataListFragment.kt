@@ -1,15 +1,12 @@
 package iot.ostapkmn.app.fragments
 
-
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +15,7 @@ import iot.ostapkmn.app.activities.ObjectDetailActivity
 import iot.ostapkmn.app.adapters.RecyclerViewAdapter
 import iot.ostapkmn.app.api.Api
 import iot.ostapkmn.app.models.Panel
-import kotlinx.android.synthetic.main.activity_list.*
+import kotlinx.android.synthetic.main.data_fragment_list.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,16 +26,13 @@ class DataListFragment : Fragment() {
 
     private var broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            val isDisconnected = intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY,
-                    false)
-            if (isDisconnected) {
-                recyclerView.visibility = View.INVISIBLE
-                progressBar.visibility = View.VISIBLE
-                Toast.makeText(recyclerView.context,
-                        getString(R.string.offline), Toast.LENGTH_SHORT)
-                        .show()
-            } else {
-                recyclerView.visibility = View.VISIBLE
+            val isDisconnected = intent.getBooleanExtra(
+                    ConnectivityManager
+                            .EXTRA_NO_CONNECTIVITY, false
+            )
+            when (isDisconnected) {
+                true -> launchDisconnectedState()
+                false -> launchConnectedState()
             }
         }
     }
@@ -53,19 +47,21 @@ class DataListFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? =
-            inflater.inflate(R.layout.activity_list, container, false)
+            inflater.inflate(R.layout.data_fragment_list, container, false)
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setProgressBar()
-        recyclerView.apply {
+        list_recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = RecyclerViewAdapter(
                     dataList
             ) { item: Panel -> partItemClicked(item) }
         }
+
         loadData()
-        swipeRefreshLayout.setOnRefreshListener {
+        swipeContainer.setOnRefreshListener {
             refreshData()
         }
     }
@@ -76,6 +72,7 @@ class DataListFragment : Fragment() {
                 broadcastReceiver,
                 IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         )
+
     }
 
     override fun onStop() {
@@ -88,9 +85,13 @@ class DataListFragment : Fragment() {
         val showDetailActivityIntent = Intent(this.activity, ObjectDetailActivity::class.java)
         showDetailActivityIntent.putExtra("id", partItem.id)
         showDetailActivityIntent.putExtra("name", partItem.name)
-        showDetailActivityIntent.putExtra("description", partItem.address)
-        showDetailActivityIntent.putExtra("photo", partItem.manufacturer)
-        showDetailActivityIntent.putExtra("size", partItem.amount)
+        showDetailActivityIntent.putExtra("section", partItem.section)
+        showDetailActivityIntent.putExtra("manufacturer", partItem.manufacturer)
+        showDetailActivityIntent.putExtra("amount", partItem.amount.toString())
+        showDetailActivityIntent.putExtra("technicalCharacteristicsTextView",
+                partItem.technicalCharacteristic)
+        showDetailActivityIntent.putExtra("imageUrls", partItem.image)
+
         startActivity(showDetailActivityIntent)
     }
 
@@ -112,7 +113,7 @@ class DataListFragment : Fragment() {
     private fun changeDataSet(response: Response<List<Panel>>?) {
         progressBar.visibility = View.INVISIBLE
         dataList.addAll(response!!.body()!!)
-        recyclerView.adapter?.notifyDataSetChanged()
+        list_recycler_view.adapter?.notifyDataSetChanged()
     }
 
     private fun setProgressBar() {
@@ -123,8 +124,20 @@ class DataListFragment : Fragment() {
         dataList.clear()
         setProgressBar()
         loadData()
-        swipeRefreshLayout.isRefreshing = false
+        swipeContainer.isRefreshing = false
     }
 
+    private fun launchDisconnectedState() {
+        list_recycler_view.visibility = View.INVISIBLE
+        progressBar.visibility = View.VISIBLE
+        Toast.makeText(
+                list_recycler_view.context,
+                getString(R.string.offline),
+                Toast.LENGTH_LONG
+        ).show()
+    }
 
+    private fun launchConnectedState() {
+        list_recycler_view.visibility = View.VISIBLE
+    }
 }

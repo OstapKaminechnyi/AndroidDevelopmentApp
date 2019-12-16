@@ -15,32 +15,25 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
 import iot.ostapkmn.app.R
-import iot.ostapkmn.app.activities.ChangePasswordActivity
 import iot.ostapkmn.app.activities.SignInActivity
 import iot.ostapkmn.app.adapters.FirebaseAdapter
-import iot.ostapkmn.app.adapters.FirebaseAdapter.firebaseFirestore
-import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.profile_fragment.*
 import java.io.IOException
-import java.util.regex.Pattern
 
 class ProfileFragment : Fragment() {
 
     private val auth = FirebaseAuth.getInstance()
     private var user = auth.currentUser!!
+    private var firebaseFirestore: FirebaseFirestore? = null
     private var firebaseStore: FirebaseStorage? = null
     private var storageReference: StorageReference? = null
     private val PICK_IMAGE_REQUEST = 71
     private var filePath: Uri? = null
-
-    private companion object {
-        const val PASSWORD_PATTERN = "^[a-zA-Z0-9!@.#$%^&*?_~]{8,16}$"
-        const val PHONE_NUMBER_PATTERN = "^\\+380\\d{3}\\d{2}\\d{2}\\d{2}\$"
-    }
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -51,11 +44,11 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        firebaseFirestore = FirebaseFirestore.getInstance()
         firebaseStore = FirebaseStorage.getInstance()
         storageReference = FirebaseStorage.getInstance().reference
         btnSignOut.setOnClickListener { signOut() }
         btnUpdateProfile.setOnClickListener { updateProfileData() }
-        btnChangePassword.setOnClickListener { launchChangePasswordActivity() }
         profile_photo.setOnClickListener { launchGallery() }
         loadUserData()
         FirebaseAdapter.getPhoto { imagePath -> loadPhoto(imagePath) }
@@ -88,20 +81,22 @@ class ProfileFragment : Fragment() {
         firebaseFirestore?.collection("users")?.document(auth.currentUser!!.uid)?.update(userData)
     }
 
-    private fun isValidEmail(email: String): Boolean {
-        val pattern = Patterns.EMAIL_ADDRESS
-        return if (sign_in_email.text.toString().isEmpty()) {
-            sign_in_email.error = getString(R.string.emailError)
-            false
-        } else pattern.matcher(email).matches()
+    fun findInvalidData(
+            email: String = "abc@gmail.com",
+            name: String = "a"
+    ): Map<String, Boolean> {
+        return mapOf(
+                "profile_photo" to (email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()),
+                "profile_name" to (name.isNotEmpty())
+        ).filter { !it.value }
     }
 
-    private fun isValidPassword(password: String): Boolean {
-        val passwordPattern: Pattern = Pattern.compile(ProfileFragment.PASSWORD_PATTERN)
-        return if (sign_in_password.text.toString().isEmpty()) {
-            sign_in_password.error = getString(R.string.passwordError)
-            false
-        } else passwordPattern.matcher(password).matches()
+    private fun isDataValid(): Boolean {
+        val email = profile_email.text.toString()
+        val name = profile_name.text.toString()
+        val invalidData = findInvalidData(email, name)
+        showDataErrors(invalidData)
+        return invalidData.isEmpty()
     }
 
     private fun showDataErrors(isDataValid: Map<String, Boolean>) {
@@ -123,13 +118,12 @@ class ProfileFragment : Fragment() {
     private fun updateProfileData() {
         val email = profile_email.text.toString()
         val name = profile_name.text.toString()
-        val phone = profile_phone.text.toString()
         val isDataValid = isDataValid()
         if (isDataValid) {
             FirebaseAdapter.run {
                 updateEmail(activity, email)
-                updateFirestoreData(email, name, phone)
-                uploadProfilePhoto(activity,filePath) { imagePath ->
+                updateFirestoreData(email, name)
+                uploadProfilePhoto(activity, filePath) { imagePath ->
                     addPhotoURL(imagePath)
                 }
                 updateProfile(name)
@@ -146,7 +140,10 @@ class ProfileFragment : Fragment() {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent, getString(R.string.select_picture)), PICK_IMAGE_REQUEST)
+        startActivityForResult(
+                Intent.createChooser(intent, getString(R.string.select_picture)),
+                PICK_IMAGE_REQUEST
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -171,14 +168,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun launchMainActivity() {
-        val intent = Intent(this.activity, MainActivity::class.java)
+        val intent = Intent(this.activity, SignInActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY and Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
-    }
-
-    private fun launchChangePasswordActivity() {
-        val intent = Intent(activity, ChangePasswordActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY and Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        startActivity(intent)
-    }
-}
+    }}

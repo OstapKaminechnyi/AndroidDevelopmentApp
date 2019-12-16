@@ -19,6 +19,7 @@ object FirebaseAdapter {
             firebaseFirestore.collection("users").document(auth.currentUser!!.uid)
 
 
+
     fun getPhoto(onSuccessListener: (imagePath: String) -> Unit) {
         var photo: String
         documentReference.get()
@@ -28,17 +29,6 @@ object FirebaseAdapter {
                         onSuccessListener(photo)
                     }
                 }
-    }
-
-    fun getPhotoUrl(): String {
-        var photo = ""
-        documentReference.get()
-                .addOnSuccessListener { document ->
-                    if (document != null) {
-                        photo = document.getString("photoURL") as String
-                    }
-                }
-        return photo
     }
 
     fun updateEmail(activity: FragmentActivity?, newEmail: String) {
@@ -56,12 +46,10 @@ object FirebaseAdapter {
         user.updateProfile(profileUpdates)
     }
 
-    fun updateFirestoreData(email: String, name: String, phone: String) {
+    fun updateFirestoreData(email: String, name: String) {
         val userData = hashMapOf<String, Any>(
                 "email" to email,
-                "name" to name,
-                "phone" to phone
-        )
+                "name" to name)
         documentReference.update(userData)
     }
 

@@ -10,43 +10,51 @@ import com.squareup.picasso.Picasso
 import iot.ostapkmn.app.R
 import iot.ostapkmn.app.models.Panel
 
-class RecyclerViewAdapter(private var panelList: List<Panel>) :
+class RecyclerViewAdapter(
+        private var panelList: List<Panel>,
+        private val itemClickListener: (Panel) -> Unit
+) :
         RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view =
+        return ViewHolder(
                 LayoutInflater.from(parent.context).inflate(R.layout.fragment_items, parent,
                         false)
-        return ViewHolder(view)
+        )
     }
+
 
     override fun getItemCount(): Int {
         return panelList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        with(panelList[position]) {
-            holder.nameTextView.text = name
-            holder.sectionTextView.text = section
-            holder.manufacturerTextView.text = manufacturer
-            holder.amountTextView.text = amount.toString()
-            holder.technicalCharacteristicsTextView.text = technicalCharacteristic
-            holder.addressTextView.text = address
+        holder.bind(panelList[position], itemClickListener)
+
+    }
+
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var nameTextView: TextView = itemView.findViewById(R.id.name)
+        var sectionTextView: TextView = itemView.findViewById(R.id.section)
+        var manufacturerTextView: TextView = itemView.findViewById(R.id.manufacturer)
+        var technicalCharacteristicsTextView: TextView = itemView.findViewById(R.id.technicalCharacteristics)
+        var amountTextView: TextView = itemView.findViewById(R.id.amount)
+        var addressTextView: TextView = itemView.findViewById(R.id.address)
+        var photoImageView: ImageView = itemView.findViewById(R.id.image)
+
+        fun bind(panelModel: Panel, clickListener: (Panel) -> Unit) {
+            nameTextView.text = panelModel.name
+            sectionTextView.text = panelModel.section
+            manufacturerTextView.text = panelModel.manufacturer
+            technicalCharacteristicsTextView.text = panelModel.technicalCharacteristic
+            amountTextView.text = panelModel.amount.toString()
+            addressTextView.text = panelModel.address
             Picasso
                     .get()
-                    .load(image)
-                    .into(holder.photoImageView)
+                    .load(panelModel.image)
+                    .into(photoImageView)
+            itemView.setOnClickListener { clickListener(panelModel) }
         }
     }
 
-    class ViewHolder(itemLayoutView: View) : RecyclerView.ViewHolder(itemLayoutView) {
-        var nameTextView: TextView = itemLayoutView.findViewById(R.id.name)
-        var sectionTextView: TextView = itemLayoutView.findViewById(R.id.section)
-        var manufacturerTextView: TextView = itemLayoutView.findViewById(R.id.manufacturer)
-        var technicalCharacteristicsTextView: TextView = itemLayoutView.
-                findViewById(R.id.technicalCharacteristics)
-        var amountTextView: TextView = itemLayoutView.findViewById(R.id.amount)
-        var addressTextView: TextView = itemLayoutView.findViewById(R.id.address)
-        var photoImageView: ImageView = itemLayoutView.findViewById(R.id.image)
-    }
 }
