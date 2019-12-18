@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import iot.ostapkmn.app.R
+import iot.ostapkmn.app.activities.AddObjectActivity
 import iot.ostapkmn.app.activities.ObjectDetailActivity
 import iot.ostapkmn.app.adapters.RecyclerViewAdapter
 import iot.ostapkmn.app.api.Api
@@ -58,6 +59,10 @@ class DataListFragment : Fragment() {
             adapter = RecyclerViewAdapter(
                     dataList
             ) { item: Panel -> partItemClicked(item) }
+        }
+        fab.setOnClickListener {
+            val intent = Intent(activity, AddObjectActivity::class.java)
+            activity!!.startActivity(intent)
         }
 
         loadData()

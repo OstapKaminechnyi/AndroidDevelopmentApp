@@ -65,11 +65,11 @@ class ProfileFragment : Fragment() {
         val photoUrl = storageReference?.child(photo)
         photoUrl?.downloadUrl?.addOnSuccessListener { photoUrl ->
             Picasso
-                    .get()
-                    .load(photoUrl)
-                    .placeholder(R.drawable.common_google_signin_btn_icon_dark)
-                    .into(profile_photo)
-        }
+                        .get()
+                        .load(photoUrl)
+                        .placeholder(R.drawable.common_google_signin_btn_icon_dark)
+                        .into(profile_photo)
+            }
         Toast.makeText(this.activity, getString(R.string.photo_is_uploaded), Toast.LENGTH_LONG)
     }
 

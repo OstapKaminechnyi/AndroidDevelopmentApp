@@ -33,10 +33,14 @@ class ObjectDetailActivity : AppCompatActivity() {
             detailed_object_section.text = intent.getStringExtra("section")
             detailed_object_manufacturer.text = intent.getStringExtra("manufacturer")
             val photo = intent.getStringExtra("imageUrls")
-            Picasso
-                    .get()
-                    .load(photo)
-                    .into(detailed_object_photo)
+            if(photo.isEmpty()){
+                detailed_object_photo.setImageResource(R.drawable.placeholder)
+            } else {
+                Picasso
+                        .get()
+                        .load(photo)
+                        .into(detailed_object_photo)
+            }
         }
     }
 }

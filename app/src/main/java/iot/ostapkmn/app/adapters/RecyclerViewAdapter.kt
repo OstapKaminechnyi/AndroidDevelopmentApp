@@ -49,10 +49,13 @@ class RecyclerViewAdapter(
             technicalCharacteristicsTextView.text = panelModel.technicalCharacteristic
             amountTextView.text = panelModel.amount.toString()
             addressTextView.text = panelModel.address
+            if (panelModel.image.isEmpty()){
+                photoImageView.setImageResource(R.drawable.placeholder)
+            } else{
             Picasso
                     .get()
                     .load(panelModel.image)
-                    .into(photoImageView)
+                    .into(photoImageView)}
             itemView.setOnClickListener { clickListener(panelModel) }
         }
     }

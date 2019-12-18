@@ -35,6 +35,9 @@
             android:name=".activities.ObjectDetailActivity"
             android:noHistory="true"
            />
+        <activity android:name=".activities.AddObjectActivity"
+            android:allowTaskReparenting="true"/>
+
     </application>
 
 
