@@ -35,7 +35,10 @@
     <string name="add">add</string>
     <string name="section">section</string>
     <string name="manufacturer">manufacturer</string>
-    <string name="sucessfully_posted">successful</string>
+    <string name="sucessfully_posted">Success!</string>
     <string name="selectimage">Select Image</string>
+    <string name="technical_characteristic">technical characteristic</string>
+    <string name="address">address</string>
+    <string name="amount">amount</string>
 
 </resources>

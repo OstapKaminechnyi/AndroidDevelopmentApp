@@ -81,7 +81,7 @@ class ProfileFragment : Fragment() {
         firebaseFirestore?.collection("users")?.document(auth.currentUser!!.uid)?.update(userData)
     }
 
-    fun findInvalidData(
+    private fun findInvalidData(
             email: String = "abc@gmail.com",
             name: String = "a"
     ): Map<String, Boolean> {
@@ -132,7 +132,7 @@ class ProfileFragment : Fragment() {
                     this.activity,
                     getString(R.string.successfully_update_profile),
                     Toast.LENGTH_LONG
-            )
+            ).show()
         }
     }
 

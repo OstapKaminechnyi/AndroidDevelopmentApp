@@ -11,8 +11,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import iot.ostapkmn.app.R
-import iot.ostapkmn.app.activities.AddObjectActivity
-import iot.ostapkmn.app.activities.ObjectDetailActivity
+import iot.ostapkmn.app.activities.PostPanelActivity
+import iot.ostapkmn.app.activities.CardDetailActivity
 import iot.ostapkmn.app.adapters.RecyclerViewAdapter
 import iot.ostapkmn.app.api.Api
 import iot.ostapkmn.app.models.Panel
@@ -61,7 +61,7 @@ class DataListFragment : Fragment() {
             ) { item: Panel -> partItemClicked(item) }
         }
         fab.setOnClickListener {
-            val intent = Intent(activity, AddObjectActivity::class.java)
+            val intent = Intent(activity, PostPanelActivity::class.java)
             activity!!.startActivity(intent)
         }
 
@@ -86,15 +86,15 @@ class DataListFragment : Fragment() {
     }
 
     private fun partItemClicked(partItem: Panel) {
-        Toast.makeText(this.activity, "Clicked: ${partItem.name}", Toast.LENGTH_LONG).show()
-        val showDetailActivityIntent = Intent(this.activity, ObjectDetailActivity::class.java)
+        val showDetailActivityIntent = Intent(this.activity, CardDetailActivity::class.java)
         showDetailActivityIntent.putExtra("id", partItem.id)
         showDetailActivityIntent.putExtra("name", partItem.name)
         showDetailActivityIntent.putExtra("section", partItem.section)
         showDetailActivityIntent.putExtra("manufacturer", partItem.manufacturer)
         showDetailActivityIntent.putExtra("amount", partItem.amount.toString())
-        showDetailActivityIntent.putExtra("technicalCharacteristicsTextView",
+        showDetailActivityIntent.putExtra("technicalCharacteristics",
                 partItem.technicalCharacteristic)
+        showDetailActivityIntent.putExtra("address", partItem.address)
         showDetailActivityIntent.putExtra("imageUrls", partItem.image)
 
         startActivity(showDetailActivityIntent)

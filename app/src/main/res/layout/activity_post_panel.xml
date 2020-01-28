@@ -3,10 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.AddObjectActivity">
+    tools:context=".activities.PostPanelActivity">
 
     <include layout="@layout/app_bar" />
-
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -18,13 +17,6 @@
         android:max="100"
         tools:ignore="MissingConstraints" />
 
-    <ImageView
-        android:id="@+id/addObjectPhoto"
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:contentDescription="TODO"
-        android:scaleType="centerCrop" />
-
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,10 +26,23 @@
             android:id="@+id/addName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text" />
+            android:inputType="text"
+            />
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/amount">
+
+        <EditText
+            android:id="@+id/addAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -45,10 +50,9 @@
         android:hint="@string/section">
 
         <EditText
-            android:id="@+id/addDescription"
+            android:id="@+id/addSection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -59,10 +63,39 @@
         android:hint="@string/manufacturer">
 
         <EditText
-            android:id="@+id/addSize"
+            android:id="@+id/addManufacturer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/technical_characteristic">
+
+        <EditText
+            android:id="@+id/addTechnicalCharacteristic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/address">
+
+        <EditText
+            android:id="@+id/addAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            />
 
     </com.google.android.material.textfield.TextInputLayout>
 

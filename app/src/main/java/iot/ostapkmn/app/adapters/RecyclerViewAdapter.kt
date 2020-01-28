@@ -23,7 +23,6 @@ class RecyclerViewAdapter(
         )
     }
 
-
     override fun getItemCount(): Int {
         return panelList.size
     }
@@ -34,13 +33,13 @@ class RecyclerViewAdapter(
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var nameTextView: TextView = itemView.findViewById(R.id.name)
-        var sectionTextView: TextView = itemView.findViewById(R.id.section)
-        var manufacturerTextView: TextView = itemView.findViewById(R.id.manufacturer)
-        var technicalCharacteristicsTextView: TextView = itemView.findViewById(R.id.technicalCharacteristics)
-        var amountTextView: TextView = itemView.findViewById(R.id.amount)
-        var addressTextView: TextView = itemView.findViewById(R.id.address)
-        var photoImageView: ImageView = itemView.findViewById(R.id.image)
+        private var nameTextView: TextView = itemView.findViewById(R.id.name)
+        private var sectionTextView: TextView = itemView.findViewById(R.id.section)
+        private var manufacturerTextView: TextView = itemView.findViewById(R.id.manufacturer)
+        private var technicalCharacteristicsTextView: TextView = itemView.findViewById(R.id.technicalCharacteristics)
+        private var amountTextView: TextView = itemView.findViewById(R.id.amount)
+        private var addressTextView: TextView = itemView.findViewById(R.id.address)
+        private var photoImageView: ImageView = itemView.findViewById(R.id.image)
 
         fun bind(panelModel: Panel, clickListener: (Panel) -> Unit) {
             nameTextView.text = panelModel.name

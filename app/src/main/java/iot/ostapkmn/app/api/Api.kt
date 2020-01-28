@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object Api {
 
-    private const val URL = "https://formidable-card-258617.appspot.com/api/"
+    private const val URL = "https://pure-loop-264815.appspot.com/api/"
 
     val getClient: ApiInterface
         get() {
