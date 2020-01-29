@@ -65,11 +65,11 @@ class ProfileFragment : Fragment() {
         val photoUrl = storageReference?.child(photo)
         photoUrl?.downloadUrl?.addOnSuccessListener { photoUrl ->
             Picasso
-                    .get()
-                    .load(photoUrl)
-                    .placeholder(R.drawable.common_google_signin_btn_icon_dark)
-                    .into(profile_photo)
-        }
+                        .get()
+                        .load(photoUrl)
+                        .placeholder(R.drawable.common_google_signin_btn_icon_dark)
+                        .into(profile_photo)
+            }
         Toast.makeText(this.activity, getString(R.string.photo_is_uploaded), Toast.LENGTH_LONG)
     }
 
@@ -81,7 +81,7 @@ class ProfileFragment : Fragment() {
         firebaseFirestore?.collection("users")?.document(auth.currentUser!!.uid)?.update(userData)
     }
 
-    fun findInvalidData(
+    private fun findInvalidData(
             email: String = "abc@gmail.com",
             name: String = "a"
     ): Map<String, Boolean> {
@@ -132,7 +132,7 @@ class ProfileFragment : Fragment() {
                     this.activity,
                     getString(R.string.successfully_update_profile),
                     Toast.LENGTH_LONG
-            )
+            ).show()
         }
     }
 

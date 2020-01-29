@@ -32,9 +32,12 @@
            />
 
         <activity
-            android:name=".activities.ObjectDetailActivity"
+            android:name=".activities.CardDetailActivity"
             android:noHistory="true"
            />
+        <activity android:name=".activities.PostPanelActivity"
+            android:allowTaskReparenting="true"/>
+
     </application>
 
 

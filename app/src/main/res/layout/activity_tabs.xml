@@ -14,7 +14,6 @@ android:layout_height="match_parent">
 
     <include layout="@layout/app_bar" />
 
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs_main"
         android:layout_width="match_parent"
@@ -23,6 +22,7 @@ android:layout_height="match_parent">
         app:tabGravity="fill"
         app:tabMode="fixed"
         app:tabTextColor="@android:color/white" />
+
 </com.google.android.material.appbar.AppBarLayout>
 
 <androidx.viewpager.widget.ViewPager

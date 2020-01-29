@@ -45,7 +45,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:17.2.0'
     implementation 'com.google.firebase:firebase-firestore:21.2.1'
     implementation 'com.google.firebase:firebase-storage:19.1.0'
-
+    implementation 'com.firebaseui:firebase-ui-storage:3.2.2'
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
@@ -53,8 +53,18 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:3.8.0"
     //image handler
     implementation 'com.squareup.picasso:picasso:2.71828'
-
-
+    //glide
+    implementation("com.github.bumptech.glide:glide:4.9.0") {
+        exclude group: "com.android.support"
+    }
+    annotationProcessor 'androidx.annotation:annotation:1.0.0'
+    implementation("com.github.bumptech.glide:glide:4.9.0@aar") {
+        transitive = true
+    }
+    apply plugin: 'com.google.gms.google-services'
+    apply plugin: 'kotlin-kapt'
+    kapt 'com.github.bumptech.glide:compiler:4.9.0'
 }
+
 apply plugin: 'com.google.gms.google-services'
 
