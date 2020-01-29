@@ -17,4 +17,28 @@
     <string name="usernameError">Please enter valid username</string>
     <string name="welcomeString">Welcome, \u0020</string>
     <string name="offline">Offline</string>
+    <string name="list">List</string>
+    <string name="tab2">Tab2</string>
+    <string name="profile">Profile</string>
+    <string name="your_name">Your name</string>
+    <string name="change_password">Change password</string>
+    <string name="fillUpCredentials">credentials is filled</string>
+    <string name="email_is_updated">email is updated</string>
+    <string name="requiredField">field is required</string>
+    <string name="incorrectField">field is incorrect</string>
+    <string name="photo_is_uploaded">photo is uploated</string>
+    <string name="upload_picture">picture is upload</string>
+    <string name="update_profile">update profile</string>
+    <string name="successfulSignUp">signUp is successful</string>
+    <string name="select_picture">select picture</string>
+    <string name="successfully_update_profile">success</string>
+    <string name="add">add</string>
+    <string name="section">section</string>
+    <string name="manufacturer">manufacturer</string>
+    <string name="sucessfully_posted">Success!</string>
+    <string name="selectimage">Select Image</string>
+    <string name="technical_characteristic">technical characteristic</string>
+    <string name="address">address</string>
+    <string name="amount">amount</string>
+
 </resources>

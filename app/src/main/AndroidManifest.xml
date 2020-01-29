@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="iot.ostapkmn.app">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,9 +26,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.TabActivity"
+            android:allowTaskReparenting="true"
+
+           />
+
         <activity
-            android:name=".activities.ListActivity"
-            android:noHistory="true" />
+            android:name=".activities.CardDetailActivity"
+            android:noHistory="true"
+           />
+        <activity android:name=".activities.PostPanelActivity"
+            android:allowTaskReparenting="true"/>
+
     </application>
+
+
 
 </manifest>

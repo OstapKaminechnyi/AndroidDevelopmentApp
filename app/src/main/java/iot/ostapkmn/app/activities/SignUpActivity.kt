@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.FirebaseFirestore
 import iot.ostapkmn.app.R
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.activity_sign_up.btn_sign_up
@@ -17,6 +20,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var currentUser: FirebaseUser
+    private val db = FirebaseFirestore.getInstance()
 
     private companion object {
         const val PASSWORD_PATTERN = "^[a-zA-Z0-9!@.#$%^&*?_~]{8,16}$"
@@ -43,19 +47,18 @@ class SignUpActivity : AppCompatActivity() {
         val password = sign_up_password.text.toString()
         if (isValidUsername(username) && isValidPhoneNumber(phoneNumber)
                 && isValidEmail(email) && isValidPassword(password)) {
-            createUser()
+            createUser(email, password, username, phoneNumber)
         } else {
             Toast.makeText(baseContext, getString(R.string.tryAgainMessage),
                     Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun createUser() {
-        auth.createUserWithEmailAndPassword(sign_up_email.text.toString(),
-                sign_up_password.text.toString())
+    private fun createUser(email: String, password: String, name: String, phone: String) {
+        auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        authenticateUser()
+                        handleUserCreating(task, email, name, phone)
                     } else {
                         Toast.makeText(
                                 baseContext, getString(R.string.createUserError),
@@ -65,15 +68,57 @@ class SignUpActivity : AppCompatActivity() {
                 }
     }
 
-    private fun authenticateUser() {
-        currentUser = auth.currentUser!!
-        val firebaseUpdate = UserProfileChangeRequest.Builder()
-                .setDisplayName(sign_up_name.text.toString()).build()
-        currentUser.updateProfile(firebaseUpdate).addOnCompleteListener {
-            startActivity(Intent(this, ListActivity
-            ::class.java))
+    private fun authenticateUser(name: String) {
+        val user = auth.currentUser
+        val profileUpdates = UserProfileChangeRequest.Builder()
+                .setDisplayName(name).build()
+        user!!.updateProfile(profileUpdates)
+                .addOnCompleteListener { task ->
+                    handleUserAuthentication(user, task)
+                }
+    }
+
+    private fun handleUserAuthentication(user: FirebaseUser, task: Task<Void>) {
+        if (task.isSuccessful) {
+            Toast.makeText(
+                    this, getString(R.string.successfulSignUp) + "," + user.displayName,
+                    Toast.LENGTH_LONG
+            ).show()
+            val intent = Intent(this, TabActivity::class.java)
+            startActivity(intent)
             finish()
         }
+    }
+    private fun handleUserCreating(
+            task: Task<AuthResult>,
+            email: String,
+            name: String,
+            phone: String
+    ) {
+        if (task.isSuccessful) {
+            addUserToDB(auth.currentUser!!.uid, email, name, phone)
+            authenticateUser(name)
+        } else {
+            Toast.makeText(
+                    baseContext, getString(R.string.createUserError),
+                    Toast.LENGTH_SHORT
+            ).show()        }
+    }
+
+    private fun addUserToDB(uid: String, email: String, name: String, phone: String) {
+        val user = hashMapOf<String, Any>(
+                "email" to email,
+                "name" to name,
+                "phone" to phone,
+                "photoURL" to ""
+        )
+        db.collection("users")
+                .document(uid)
+                .set(user)
+                .addOnFailureListener { exception ->
+                    Toast.makeText(this, exception.toString(), Toast.LENGTH_LONG).show()
+                }
+        Toast.makeText(this, getString(R.string.successfulSignUp), Toast.LENGTH_LONG).show()
     }
 
     private fun isValidEmail(email: String): Boolean {
